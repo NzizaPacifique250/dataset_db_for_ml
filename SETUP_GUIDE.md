@@ -129,7 +129,7 @@ MongoDB Atlas is a free cloud-hosted MongoDB service. Use this if you don't want
 ### Step 2: Set Up Database Access
 1. In the Atlas dashboard, go to **Database Access** (left sidebar)
 2. Click **Add New Database User**
-3. Set a username and password (e.g., `traffic_admin` / `yourpassword`)
+3. Set a username and password (e.g., `traffic_admin` / `<your-password>`)
 4. Set **Database User Privileges** to **Read and Write to Any Database**
 5. Click **Add User**
 
@@ -145,13 +145,13 @@ MongoDB Atlas is a free cloud-hosted MongoDB service. Use this if you don't want
 3. Choose **Drivers** (or **Shell**)
 4. Copy the connection string. It looks like:
    ```
-   mongodb+srv://traffic_admin:<password>@cluster0.xxxxx.mongodb.net/
+   mongodb+srv://<DB_USER>:<DB_PASSWORD>@<CLUSTER_HOST>/
    ```
-5. Replace `<password>` with your actual password
+5. Replace placeholders with your real values locally (never commit real credentials)
 
 ### Step 5: Connect with mongosh
 ```bash
-mongosh "mongodb+srv://traffic_admin:yourpassword@cluster0.xxxxx.mongodb.net/traffic_db"
+mongosh "mongodb+srv://<DB_USER>:<DB_PASSWORD>@<CLUSTER_HOST>/traffic_db"
 ```
 
 ### Step 6: Run the Scripts
@@ -159,8 +159,8 @@ Once connected, you can either:
 
 **Option A — Run script files:**
 ```bash
-mongosh "mongodb+srv://traffic_admin:yourpassword@cluster0.xxxxx.mongodb.net/traffic_db" < mongodb/collection_design.js
-mongosh "mongodb+srv://traffic_admin:yourpassword@cluster0.xxxxx.mongodb.net/traffic_db" < mongodb/queries.js
+mongosh "mongodb+srv://<DB_USER>:<DB_PASSWORD>@<CLUSTER_HOST>/traffic_db" < mongodb/collection_design.js
+mongosh "mongodb+srv://<DB_USER>:<DB_PASSWORD>@<CLUSTER_HOST>/traffic_db" < mongodb/queries.js
 ```
 
 **Option B — Use the Atlas UI:**

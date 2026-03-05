@@ -55,7 +55,7 @@ pip install -r requirements.txt
 **For MongoDB (Atlas Cloud):**
 - Update `MONGO_URI` in `config.py`:
   ```python
-  MONGO_URI = 'mongodb+srv://<username>:<password>@<cluster>.mongodb.net/traffic_db'
+  MONGO_URI = 'mongodb+srv://<DB_USER>:<DB_PASSWORD>@<CLUSTER_HOST>/traffic_db'
   ```
 
 #### 4. Run the Application

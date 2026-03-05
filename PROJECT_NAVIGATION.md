@@ -394,7 +394,7 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/traffic_db'
 MONGO_URI = 'mongodb://localhost:27017/traffic_db'
 
 # MongoDB (Atlas Cloud)
-MONGO_URI = 'mongodb+srv://username:password@cluster.mongodb.net/traffic_db'
+MONGO_URI = 'mongodb+srv://<DB_USER>:<DB_PASSWORD>@<CLUSTER_HOST>/traffic_db'
 ```
 
 ### Environment Setup
