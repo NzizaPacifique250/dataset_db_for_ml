@@ -7,6 +7,8 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
+from bson import ObjectId
+from sqlalchemy import text
 from datetime import datetime, timedelta
 import os
 import sys
@@ -108,6 +110,19 @@ def format_datetime(dt_string):
         return datetime.fromisoformat(dt_string.replace('Z', '+00:00'))
     except:
         return datetime.strptime(dt_string, '%Y-%m-%d %H:%M:%S')
+
+
+def serialize_mongo_value(value):
+    """Convert MongoDB-specific values into JSON-serializable values."""
+    if isinstance(value, ObjectId):
+        return str(value)
+    if isinstance(value, datetime):
+        return value.isoformat()
+    if isinstance(value, dict):
+        return {k: serialize_mongo_value(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [serialize_mongo_value(v) for v in value]
+    return value
 
 
 # ============================================================
@@ -289,9 +304,6 @@ def get_traffic_by_date_range_sql():
             TrafficRecord.date_time <= end_dt
         ).order_by(TrafficRecord.date_time).all()
         
-        if not records:
-            return jsonify({'error': 'No records found for the specified date range'}), 404
-        
         return jsonify({
             'start_date': start_date,
             'end_date': end_date,
@@ -417,13 +429,13 @@ def create_traffic_record_mongo():
         }
         
         result = traffic_collection.insert_one(document)
+        response_record = serialize_mongo_value(document)
+        response_record.pop('_id', None)
         
         return jsonify({
             'message': 'Traffic record created successfully',
             'id': str(result.inserted_id),
-            'record': {
-                **{k: v if k != 'date_time' else v.isoformat() for k, v in document.items()}
-            }
+            'record': response_record
         }), 201
         
     except PyMongoError as e:
@@ -474,17 +486,12 @@ def get_traffic_record_mongo(record_id):
         if not mongo_client:
             return jsonify({'error': 'MongoDB connection not available'}), 500
         
-        from bson import ObjectId
-        
         record = traffic_collection.find_one({'_id': ObjectId(record_id)}, {'_id': 0})
         
         if not record:
             return jsonify({'error': 'Record not found'}), 404
         
-        if 'date_time' in record:
-            record['date_time'] = record['date_time'].isoformat()
-        
-        return jsonify(record), 200
+        return jsonify(serialize_mongo_value(record)), 200
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -496,8 +503,6 @@ def update_traffic_record_mongo(record_id):
     try:
         if not mongo_client:
             return jsonify({'error': 'MongoDB connection not available'}), 500
-        
-        from bson import ObjectId
         
         data = request.get_json()
         
@@ -528,12 +533,10 @@ def update_traffic_record_mongo(record_id):
             return jsonify({'error': 'Record not found'}), 404
         
         updated_record = traffic_collection.find_one({'_id': ObjectId(record_id)}, {'_id': 0})
-        if 'date_time' in updated_record:
-            updated_record['date_time'] = updated_record['date_time'].isoformat()
         
         return jsonify({
             'message': 'Traffic record updated successfully',
-            'record': updated_record
+            'record': serialize_mongo_value(updated_record)
         }), 200
         
     except Exception as e:
@@ -546,8 +549,6 @@ def delete_traffic_record_mongo(record_id):
     try:
         if not mongo_client:
             return jsonify({'error': 'MongoDB connection not available'}), 500
-        
-        from bson import ObjectId
         
         result = traffic_collection.delete_one({'_id': ObjectId(record_id)})
         
@@ -576,12 +577,9 @@ def get_latest_traffic_record_mongo():
         if not record:
             return jsonify({'error': 'No records found'}), 404
         
-        if 'date_time' in record:
-            record['date_time'] = record['date_time'].isoformat()
-        
         return jsonify({
             'message': 'Latest traffic record',
-            'record': record
+            'record': serialize_mongo_value(record)
         }), 200
         
     except Exception as e:
@@ -616,13 +614,7 @@ def get_traffic_by_date_range_mongo():
             ).sort('date_time', 1)
         )
         
-        if not records:
-            return jsonify({'error': 'No records found for the specified date range'}), 404
-        
-        # Convert datetime objects to ISO format
-        for record in records:
-            if 'date_time' in record:
-                record['date_time'] = record['date_time'].isoformat()
+        records = [serialize_mongo_value(record) for record in records]
         
         return jsonify({
             'start_date': start_date,
@@ -642,13 +634,31 @@ def get_traffic_by_date_range_mongo():
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
+    sql_status = 'disconnected'
+    mongo_status = 'disconnected'
+
+    try:
+        db.session.execute(text('SELECT 1'))
+        sql_status = 'connected'
+    except Exception:
+        sql_status = 'disconnected'
+
+    try:
+        if mongo_client:
+            mongo_client.admin.command('ping')
+            mongo_status = 'connected'
+    except Exception:
+        mongo_status = 'disconnected'
+
+    overall_status = 'healthy' if sql_status == 'connected' and mongo_status == 'connected' else 'degraded'
+
     status = {
-        'status': 'healthy',
+        'status': overall_status,
         'timestamp': datetime.now().isoformat(),
         'services': {
             'api': 'running',
-            'sql': 'connected' if db.engine.execute('SELECT 1') else 'error',
-            'mongodb': 'connected' if mongo_client else 'disconnected'
+            'sql': sql_status,
+            'mongodb': mongo_status
         }
     }
     return jsonify(status), 200

@@ -83,7 +83,7 @@ CREATE TEMPORARY TABLE temp_traffic (
 );
 
 -- Load raw CSV data into the temporary table
-LOAD DATA LOCAL INFILE 'C:/Users/josue/Music/formative_1_ML_Pipeline/Metro_Interstate_Traffic_Volume.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/user/Desktop/dataset_db_for_ml/Metro_Interstate_Traffic_Volume.csv'
 INTO TABLE temp_traffic
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
