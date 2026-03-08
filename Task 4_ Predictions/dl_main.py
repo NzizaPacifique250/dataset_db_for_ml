@@ -1,4 +1,3 @@
-"""
 # 1️⃣ Import Packages
 import pandas as pd
 import numpy as np
@@ -12,9 +11,7 @@ from datetime import datetime
 from tensorflow.keras.models import load_model  # for advanced model (.h5)
 
 
-
-
-# Read Data (Single Record Example)
+# Read Data (Last 24 Records)
 saved_columns = ['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'year', 'month', 'day',
        'is_weekend', 'hour', 'lag_1', 'lag_24', 'lag_168', 'rolling_mean_24',
        'rolling_mean_168', 'holiday_Columbus Day', 'holiday_Independence Day',
@@ -113,4 +110,3 @@ results_df["r2_lstm2"] = r2_lstm2
 print("\nPrediction Results:")
 print(results_df)
 print(f"\nRMSE: {rmse_lstm2:.2f}, R2: {r2_lstm2:.4f}")
-"""

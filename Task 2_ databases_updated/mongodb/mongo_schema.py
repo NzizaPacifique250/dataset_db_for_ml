@@ -21,7 +21,7 @@ df = pd.read_csv(csv_file)
 df['holiday'] = df['holiday'].fillna('No')
 df['date_time'] = pd.to_datetime(df['date_time'])
 df['day_of_week'] = df['date_time'].dt.dayofweek
-df['is_weekend'] = df['day_of_week'].apply(lambda x: 1 if x >= 6 else 0)  # weekend: Sat/Sun
+df['is_weekend'] = df['day_of_week'].apply(lambda x: 1 if x >= 5 else 0)  # weekend: Sat(5)/Sun(6)
 df['year'] = df['date_time'].dt.year
 df['day'] = df['date_time'].dt.day
 df['hour'] = df['date_time'].dt.hour

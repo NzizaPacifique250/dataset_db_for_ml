@@ -7,11 +7,6 @@ app = FastAPI(title="Traffic Data API", version="1.0")
 app.include_router(mysql_router)
 app.include_router(mongo_router)
 
-app = FastAPI(title="Traffic Data API", version="1.0")
-
-app.include_router(mysql_router)
-app.include_router(mongo_router)
-
 @app.get("/")
 def root():
     return {"message": "Traffic Data API. Use /mysql or /mongo endpoints."}
