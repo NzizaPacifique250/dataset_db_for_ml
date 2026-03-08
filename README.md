@@ -2,7 +2,7 @@
 
 A complete end-to-end machine learning pipeline for predicting hourly traffic volume using time-series data. This project demonstrates data preprocessing, dual-database implementation (MySQL & MongoDB), RESTful API development, and model deployment for real-time predictions.
 
-## 📊 Project Overview
+## Project Overview
 
 This project uses the [Metro Interstate Traffic Volume dataset](https://www.kaggle.com/datasets/mikedev/metro-traffic-volume) from Kaggle to predict hourly traffic volume based on weather conditions, holidays, and temporal patterns. The pipeline integrates classical machine learning (Linear Regression) and deep learning (LSTM) approaches with production-ready database and API infrastructure.
 
@@ -13,7 +13,7 @@ This project uses the [Metro Interstate Traffic Volume dataset](https://www.kagg
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 dataset_db_for_ml/
@@ -47,7 +47,7 @@ dataset_db_for_ml/
 
 ---
 
-## 👥 Contributors
+## Contributors
 
 | Task | Contributor | Responsibility |
 |------|-------------|----------------|
@@ -58,7 +58,7 @@ dataset_db_for_ml/
 
 ---
 
-## 🚀 Tasks Overview
+## Tasks Overview
 
 ### **Task 1: Exploratory Data Analysis & Model Training**
 **Lead:** Emmanuella Asoliya Briggs
@@ -174,7 +174,7 @@ python dl_main.py
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Component | Technology |
 |-----------|------------|
@@ -190,7 +190,7 @@ python dl_main.py
 
 ---
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### **Prerequisites**
 - Python 3.9+
@@ -251,7 +251,7 @@ python dl_main.py    # LSTM
 
 ---
 
-## 📈 Model Performance
+## Model Performance
 
 | Model | RMSE | R² Score | Notes |
 |-------|------|----------|-------|
@@ -260,18 +260,18 @@ python dl_main.py    # LSTM
 
 ---
 
-## 🔍 Key Features
+## Key Features
 
-✅ **Complete ML Pipeline:** From raw data to deployed predictions  
-✅ **Dual Database Support:** Normalized (MySQL) and denormalized (MongoDB) designs  
-✅ **RESTful API:** FastAPI with automatic documentation  
-✅ **Time-Series Engineering:** Lag features, rolling averages, temporal decomposition  
-✅ **Production-Ready:** Modular code, error handling, environment configuration  
-✅ **Reproducible:** Clear setup instructions and version-controlled dependencies  
+- **Complete ML Pipeline:** From raw data to deployed predictions
+- **Dual Database Support:** Normalized (MySQL) and denormalized (MongoDB) designs
+- **RESTful API:** FastAPI with automatic documentation
+- **Time-Series Engineering:** Lag features, rolling averages, temporal decomposition
+- **Production-Ready:** Modular code, error handling, environment configuration
+- **Reproducible:** Clear setup instructions and version-controlled dependencies  
 
 ---
 
-## 📝 Documentation
+## Documentation
 
 - **Task 1:** See `Task 1_  EDA and model training/USER_GUIDE.md`
 - **Task 2:** See `Task 2_ databases_updated/mysql/ERD_diagram.md`
@@ -280,7 +280,7 @@ python dl_main.py    # LSTM
 
 ---
 
-## 🤝 Usage Example
+## Usage Example
 
 ```python
 import requests
@@ -307,13 +307,13 @@ prediction = model.predict(X)
 
 ---
 
-## 📄 License
+## License
 
 This project is part of an academic assignment for demonstrating time-series analysis, database design, and API development skills.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Dataset:** [Metro Interstate Traffic Volume](https://www.kaggle.com/datasets/mikedev/metro-traffic-volume) by Mike Dev on Kaggle
 - **Institution:** Academic group project (4-member team)
@@ -321,7 +321,7 @@ This project is part of an academic assignment for demonstrating time-series ana
 
 ---
 
-## 📧 Contact
+## Contact
 
 For questions or collaboration:
 - **Repository:** [github.com/NzizaPacifique250/dataset_db_for_ml](https://github.com/NzizaPacifique250/dataset_db_for_ml)
