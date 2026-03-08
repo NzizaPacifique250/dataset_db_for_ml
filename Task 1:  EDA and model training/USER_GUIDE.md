@@ -58,13 +58,16 @@
 **Placeholders for Graphs:**
 
 - Traffic Volume Hour Of Day
+<img width="1014" height="547" alt="traffic volume by hour of day" src="https://github.com/user-attachments/assets/4a15bc61-83b9-4e30-a5ec-9993df020a58" />
 
 
 - Daily Traffic Trend: Weekday vs Weekend and Traffic by Day of Week  
+<img width="1589" height="590" alt="traffic volume over time" src="https://github.com/user-attachments/assets/6aa76915-0182-483a-9fdf-6cd3c5198891" />
 
-- Correlation Matrix: Traffic vs External Variables  
 
-- Traffic by Day of Week  
+- Correlation Matrix: Traffic vs External Variables
+<img width="1589" height="590" alt="traffic volume over time" src="https://github.com/user-attachments/assets/eb58b4df-31e2-4a57-8108-d8e301d0b8f6" />
+
 
 ---
 
