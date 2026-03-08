@@ -1,0 +1,3 @@
+- Install Mysql
+- Install Mongodb 
+- Create .env and put the credentials
